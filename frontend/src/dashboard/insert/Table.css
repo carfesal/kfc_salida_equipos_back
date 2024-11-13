@@ -1,0 +1,52 @@
+/* Contenedor de la tabla */
+.table-container {
+  max-width: var(--table-max-width, 100%);
+  max-height: var(--table-max-height, 450px);
+  overflow-x: auto;
+  overflow-y: auto;
+  margin: 0 auto;
+}
+
+/* Estilos para la tabla */
+.responsive-table {
+  width: auto;
+  border-collapse: collapse;
+  position: relative; /* Añadido para la cabecera fija */
+}
+
+/* Estilos para las celdas de la tabla */
+.responsive-table th,
+.responsive-table td {
+  padding: 5px;
+  text-align: left;
+  border: 1px solid #08325c;
+  white-space: nowrap;
+}
+
+/* Estilos para las celdas del encabezado */
+.responsive-table th {
+  color: #ffffff;
+  background-color: #1976D2;
+  position: sticky; /* Fija la cabecera */
+  top: 0;
+  z-index: 1;
+}
+
+/* Cambia el color de fondo al seleccionar la fila */
+.responsive-table tbody tr.selected {
+  background-color: rgb(12, 231, 12);
+}
+
+/* Alterna el color de las filas */
+.responsive-table tbody tr:nth-child(even) {
+  background-color: #dfedf7;
+  color: #000000;
+}
+
+/* Estilos responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+  .responsive-table th,
+  .responsive-table td {
+    padding: 12px 8px;
+  }
+}

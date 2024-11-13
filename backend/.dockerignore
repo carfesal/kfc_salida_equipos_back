@@ -1,0 +1,38 @@
+# Ignorar archivos de configuración de sistemas operativos y editores
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de compilación
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignorar archivos de configuración del entorno
+.env
+.env.local
+.env.*.local
+
+# Ignorar archivos de logs
+*.log
+logs
+*.pid
+*.seed
+*.pid.lock
+
+# Ignorar la carpeta de dependencias de Docker (si la tienes)
+.docker
+
+# Ignorar archivos relacionados con Git
+.git
+.gitignore
+
+# Ignorar archivos y carpetas de configuración de editores de texto
+.vscode
+.idea
+
+# Ignorar carpetas de dist o build
+dist
+
+# Ignorar imágenes, volúmenes y cachés locales de Docker
+.docker/cache
+docker-compose.override.yml
