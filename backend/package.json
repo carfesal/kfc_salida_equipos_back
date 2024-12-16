@@ -1,34 +1,30 @@
 {
-  "name": "server",
+  "name": "kfc-equipos-back",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon index.js"
   },
-  "author": "",
+  "author": "Erwin Chuya",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "adbkit": "^2.11.1",
-    "axios": "^1.7.2",
-    "body-parser": "^1.20.2",
+    "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
     "cors": "^2.8.5",
-    "exceljs": "^4.4.0",
-    "express": "^4.19.2",
-    "mssql": "^10.0.4",
-    "multer": "^1.4.5-lts.1",
-    "mysql": "^2.18.1",
-    "node-cron": "^3.0.3",
-    "node-ssh": "^13.2.0",
-    "node-wmi": "^0.0.5",
-    "nodemailer": "^6.9.15",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.1",
-    "ssh2": "^1.15.0"
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^11.0.1",
+    "mysql2": "^3.11.4",
+    "pg": "^8.13.1",
+    "sequelize": "^6.37.5",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "concurrently": "^8.2.2"
+    "nodemon": "^3.1.9",
+    "sequelize-cli": "^6.6.2"
   }
 }
