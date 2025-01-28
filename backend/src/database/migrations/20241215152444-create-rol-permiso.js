@@ -29,7 +29,7 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn(process.env.DB_DIALECT == 'mssql' ? 'GETDATE()' : 'NOW')
+        defaultValue: Sequelize.fn(process.env.DB_DIALECT == 'mssql' ? 'GETDATE' : 'NOW')
       },
       activo: {
         type: Sequelize.BOOLEAN,

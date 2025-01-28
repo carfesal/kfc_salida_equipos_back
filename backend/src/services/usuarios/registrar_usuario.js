@@ -17,11 +17,10 @@ class RegistrarUsuario {
      */
     static async ejecutar(datos) {
         try {
-
-            const usuarioExistente = await this.obtenerUsuarioPorEmail(datos.email);
+            const usuarioExistente = await this.usuarioYaExiste(datos.email, datos.cedula);
 
             if (usuarioExistente) {
-                return crearRespuesta("Usuario ya registrado", null, 400, false);
+                return crearRespuesta("Usuario con esa informacion ya existe", null, 400, false);
             }
 
             const contraseniaEncriptada = await bcrypt.hash(datos.password, 10);
@@ -37,6 +36,7 @@ class RegistrarUsuario {
             const usuario = await UsuarioRepository.crearUsuario(datos);
 
             if (usuario) {
+                delete usuario.password;
                 return crearRespuesta("Usuario creado correctamente", usuario, 201, true);
             }
             
@@ -48,6 +48,23 @@ class RegistrarUsuario {
         }
     }
     
+    /**
+     * 
+     * @param {*} email 
+     * @param {*} cedula 
+     */
+    static async usuarioYaExiste(email, cedula) {
+        let usuarioExistente = await this.obtenerUsuarioPorEmail(email);
+
+        if (usuarioExistente) return true;
+
+        usuarioExistente = await this.obtenerUsuarioPorCedula(cedula);
+
+        if (usuarioExistente) return true;
+
+        return false;
+    }
+
     /**
      * 
      * @param {string} nombre 
@@ -69,6 +86,13 @@ class RegistrarUsuario {
         if (!email) 
             return null;
         const usuario = await UsuarioRepository.obtenerUsuarioPorEmail(email);
+        return usuario;
+    }
+
+    static async obtenerUsuarioPorCedula(cedula) {
+        if (!cedula) 
+            return null;
+        const usuario = await UsuarioRepository.obtenerUsuarioPorCedula(cedula);
         return usuario;
     }
 }

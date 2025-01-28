@@ -4,6 +4,7 @@ const {
   DataTypes
 } = require('sequelize');
 const sequelize = require('../database');
+const { Salida } = require('.');
 
 class SalidaDetalle extends Model {
   /**
@@ -29,6 +30,10 @@ class SalidaDetalle extends Model {
       foreignKey: 'salidaDetalleId',
       as: 'adjuntos'
     });
+    SalidaDetalle.belongsTo(models.Usuario, {
+      foreignKey: 'responsableId',
+      as: 'responsable'
+    });
   }
 }
 SalidaDetalle.init({
@@ -44,7 +49,19 @@ SalidaDetalle.init({
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  cantidad: DataTypes.INTEGER
+  cantidad: DataTypes.INTEGER,
+  responsableId: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  estado: 
+  {
+    type: DataTypes.STRING,
+    defaultValue: 'PND',
+    validate: {
+      isIn: [['PND', 'AUT', 'REC']]
+    } 
+  }
 }, {
   sequelize,
   modelName: 'SalidaDetalle',

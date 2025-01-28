@@ -25,12 +25,12 @@ class SalidaRepository {
      * @param {*} id 
      * @returns 
      */
-    static async obtenerSalidaPorId(id) {
+    static async obtenerSalidaPorId(id, relaciones = []) {
         const salida = await Salida.findOne({
             where: {
                 id
             },
-            include: 'detalles'
+            include: relaciones
         })
 
         if (salida) {
@@ -40,6 +40,37 @@ class SalidaRepository {
         return null;
     }
     
+    /**
+     * 
+     * @param {*} id 
+     * @param {*} datos 
+     * @returns 
+     */
+    static async actualizarSalida(id, datos) {
+        const salida = await Salida.findByPk(id);
+
+        if (!salida) return null;
+
+        return await salida.update(datos);
+    }
+
+    /**
+     * 
+     * @param {*} filtros 
+     * @returns 
+     */
+    static async buscarSalidas(filtros, relaciones = []) {
+        const salidas = await Salida.findAll({
+            where: filtros,
+            include: relaciones
+        });
+
+        if (salidas) {
+            return salidas;
+        }
+
+        return [];
+    }
 }
 
 module.exports = SalidaRepository;

@@ -17,10 +17,22 @@ class Equipo extends Model {
   }
 }
 Equipo.init({
-  nombre: DataTypes.STRING,
-  marca: DataTypes.STRING,
-  modelo: DataTypes.STRING,
-  serie: DataTypes.STRING,
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  marca: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  modelo: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  serie: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   descripcion: DataTypes.STRING
 }, {
   sequelize,

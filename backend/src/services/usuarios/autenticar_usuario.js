@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 //DEPENDENCIAS DE PROYECTO
 const UsuarioRepository = require('../../repositories/usuario_repo');
 const { crearRespuesta } = require('../utils');
+const appConfig = require('../../config/app');
+const app = require('../../config/app');
 
 /**
  * 
@@ -50,7 +52,7 @@ class AutenticarUsuario {
             rol: usuario.rol.nombre
         };
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET ?? 'b3b86e8dc0c54bf7950ea255556ae80fc5c8a63710c5080d35719e6f10505fc7', {
+        const token = jwt.sign(payload, appConfig.jwtSecret, {
             expiresIn: '24h'
         });
 

@@ -65,6 +65,28 @@ class RolRepository {
 
         return null;
     }
+
+    /**
+     * 
+     * @param {*} id 
+     * @param {*} permiso 
+     * @returns 
+     */
+    static async agregarPermison(id, permiso) {
+        const rol = await Rol.findByPk(id);
+
+        if (!rol) {
+            return false;
+        }
+
+        if (rol.hasPermiso(permiso)) {
+            return true;
+        }
+
+        await rol.addPermiso(permiso);
+
+        return true;
+    }
 }
 
 module.exports = RolRepository;

@@ -18,6 +18,18 @@ class Usuario extends Model {
       as: 'rol'
     });
   }
+
+  /**
+   * 
+   * @param {string} permiso 
+   * @returns 
+   */
+  verificarPermiso(permiso) {
+    const rol = this.getRol();
+    const permisos = rol.getPermisos();
+
+    return permisos.some(p => p.nombre === permiso);
+  }
 }
 Usuario.init({
   rolId: {
@@ -56,7 +68,11 @@ Usuario.init({
     type: DataTypes.BOOLEAN,
     allowNull: false,
     defaultValue: true
-  }
+  },
+  credencial: {
+    type: DataTypes.BLOB,
+    allowNull: true
+  },
 }, {
   sequelize,
   modelName: 'Usuario',

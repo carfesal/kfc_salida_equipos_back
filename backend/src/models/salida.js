@@ -48,7 +48,15 @@ Salida.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  fechaHoraSalida: DataTypes.DATE
+  fechaHoraSalida: DataTypes.DATE,
+  estado: 
+  {
+    type: DataTypes.STRING,
+    defaultValue: 'PND',
+    validate: {
+      isIn: [['PND', 'AUT', 'REC']]
+    } 
+  }
 }, {
   sequelize,
   modelName: 'Salida',
