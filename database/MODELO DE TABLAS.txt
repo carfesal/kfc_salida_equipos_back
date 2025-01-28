@@ -1,0 +1,38 @@
+-------------------------------------------
+*STORE*		TABLA
+- nombre 	(K051)
+- cadena 	(KFC)
+-------------------------------------------
+*UBICACIÓN*	TABLA
+- ciudad 	(GYE)
+- p_cardinal 	(NORTE)
+- cc 		(SAN MARINO)
+- descripción 	(Fco. Orellana)
+-------------------------------------------
+*TECNICO_ZONA*	TABLA
+- id		(00001)
+- ci 		(0987654321)
+- Nombre 	(Erwin)
+- Apellido 	(Chuya)
+- correo	(erwin.chuya@kfc.com.ec)
+- descripción 	(38 locales a cargo)
+-------------------------------------------
+*VERSIÓN_MXP*	TABLA
+- id		(00001)
+- versión	(1.7.11)
+- descripcion	(VERSIÓN PILOTO)
+-------------------------------------------
+*HISTORIAL_VERSIONES_MXP* (TRIGGER)
+- id		(00001)
+- versión	(1.7.11)
+- descripcion	(VERSIÓN PILOTO)
+- fecha_registro(29/04/2024 16:30:00 PM)
+-------------------------------------------
+*ACTIVO_FIJO*	TABLA
+- id
+- cod_activo
+- fecha_instalación
+- fecha_baja
+- estado
+- descripción
+-------------------------------------------

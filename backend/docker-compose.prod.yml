@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  app:    
+    container_name: kfc_equipos_prod_back
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    env_file:
+      - .env
+    restart: on-failure
+    depends_on:
+      - db      
+  db:
+    container_name: kfc_equipos_mssql_db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD}
+      ACCEPT_EULA: "Y"
+    volumes:
+      - kfc_mssql_data:/var/opt/mssql
+volumes:
+  kfc_mssql_data: {}

@@ -1,0 +1,70 @@
+/* Estilos modificados para hacer el diseño más responsive */
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Centra el contenido horizontalmente */
+  padding: 20px; /* Agrega espacio alrededor del contenido */
+}
+
+.datos,
+.alinearTabla {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Espacio entre los elementos */
+  max-width: 100%; /* Ancho máximo para evitar desbordamiento en dispositivos pequeños */
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column; /* Coloca los elementos uno encima del otro */
+  align-items: 0; /* Centra los elementos horizontalmente */
+  gap: 10px; /* Espacio entre los elementos */
+}
+
+.input-field,
+.button {/* Asegura que los elementos sean posicionados relativamente */
+  width: 250px; /* Ajusta el ancho según sea necesario */
+  z-index: 1; /* Establece un valor de z-index más bajo */
+}
+
+.input-field2 {/* Asegura que los elementos sean posicionados relativamente */
+  width: 250px; /* Ajusta el ancho según sea necesario */
+  z-index: 2; /* Establece un valor de z-index más bajo */
+}
+
+.input-field3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+  text-align: center; /* Centra el texto horizontalmente */
+}
+
+.tabla-scrollable {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.tabla-scrollable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-scrollable th, .tabla-scrollable td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  white-space: nowrap; /* Evita el salto de línea en el texto */
+}
+
+.TableContainer {
+  width: 100%; /* Haz que la tabla ocupe el ancho completo del contenedor */
+  border: 1px solid #ccc; /* Borde de la tabla */
+  border-radius: 8px; /* Bordes redondeados */
+  margin-top: 20px; /* Espacio arriba de la tabla */
+}
+
+.TableContainer td {
+  border-width: 2px; /* Hacer las líneas de las celdas más gruesas */
+}

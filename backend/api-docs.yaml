@@ -1,0 +1,781 @@
+openapi: 3.0.0
+servers: []
+info:
+  version: "1.0.0"
+  title: KFC SALIDA DE EQUIPOS
+  description: API PARA SALIDA DE EQUIPOS
+paths:
+  /salida_equipos/v1/usuarios:
+    post:
+      tags:
+        - Usuarios
+      summary: Crear Usuario
+      security:
+        - bearerAuth: []
+      description: Crea Usuario
+      operationId: crearUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrearUsuario'                
+      responses:
+        '201':
+          description: Usuario creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsuarioModel'
+        '400':
+          description: Error al crear usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /salida_equipos/v1/usuarios/login:
+    post:
+      tags:
+        - Usuarios
+      summary: Login Usuario
+      security:
+        - bearerAuth: []
+      operationId: loginUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUsuario'
+      responses:
+        '200':
+          description: response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginUsuarioResponse'
+        '400':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /salida_equipos/v1/salidas:
+    post:
+      tags:
+        - Salidas
+      summary: Crea Salida
+      security:
+        - bearerAuth: []
+      description: Crea Salida
+      operationId: crearSalida
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrearSalida'
+      responses:
+        '201':
+          description: Salida creada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: Salida creada
+                  datos:
+                    $ref: '#/components/schemas/SalidaModel'
+                  codigo:
+                    type: integer
+                    format: int32
+                    example: 201
+                  exito:
+                    type: boolean
+                    example: true
+        '400':
+          description: Error al crear salida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags:
+        - Salidas
+      summary: Busca Salidas segun filtros
+      description: Obtiene Salidas
+      security:
+        - bearerAuth: []
+      operationId: obtenerSalidas
+      parameters:
+        - name: estado
+          in: query
+          schema:
+            type: string
+            enum:
+              - PND
+              - AUT
+              - RET
+          required: false
+          description: Estado de la salida
+        - name: cedulaAutorizador
+          in: query
+          schema:
+            type: string
+          required: false
+          description: Cedula del autorizador
+        - name: cedulaResponsable
+          in: query
+          schema:
+            type: string
+          required: false
+          description: Cedula del responsable
+        - name: fechaDesde
+          in: query
+          schema:
+            type: string
+            format: date
+          required: false
+          description: Fecha desde
+        - name: fechaHasta
+          in: query
+          schema:
+            type: string
+            format: date
+          required: false
+          description: Fecha hasta
+        - name: motivo
+          in: query
+          schema:
+            type: string
+          required: false
+          description: Motivo de la salida
+      responses:
+        '200':
+          description: Salidas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: Salidas
+                  datos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SalidaModelConAsociaciones'
+                  codigo:
+                    type: integer
+                    format: int32
+                    example: 200
+                  exito:
+                    type: boolean
+                    example: true
+        '400':
+          description: Error al obtener salidas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /salida_equipos/v1/salidas/{salidaId}:
+    get:
+      tags:
+        - Salidas
+      summary: Obtiene Salida por ID
+      security:
+        - bearerAuth: []
+      description: Obtiene Salida
+      operationId: obtenerSalida
+      parameters:
+        - name: salidaId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Salida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: Salida
+                  datos:
+                    $ref: '#/components/schemas/SalidaModelConAsociaciones'
+                  codigo:
+                    type: integer
+                    format: int32
+                    example: 200
+                  exito:
+                    type: boolean
+                    example: true
+        '400':
+          description: Error al obtener salida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /salida_equipos/v1/salidas/{salidaId}/autorizar:
+    patch:
+      tags:
+        - Salidas
+      summary: Autoriza Salida
+      description: Autoriza Salida
+      security:
+        - bearerAuth: []
+      operationId: autorizarSalida
+      parameters:
+        - name: salidaId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                autorizado:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: Salida autorizada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: Salida autorizada
+                  datos:
+                    $ref: '#/components/schemas/SalidaModel'
+                  codigo:
+                    type: integer
+                    format: int32
+                    example: 200
+                  exito:
+                    type: boolean
+                    example: true
+        '400':
+          description: Error al autorizar salida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /salida_equipos/v1/salidas/{salidaId}/detalles:
+    post:
+      tags:
+        - Salidas
+      summary: Crea Detalle de Salida
+      security:
+        - bearerAuth: []
+      description: Crea Detalle de Salida
+      operationId: crearSalidaDetalle
+      parameters:
+        - name: salidaId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CrearSalidaDetalle'
+      responses:
+        '201':
+          description: Detalle de Salida creado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: Detalle de Salida creado
+                  datos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SalidaDetalleModel'
+                  codigo:
+                    type: integer
+                    format: int32
+                    example: 201
+                  exito:
+                    type: boolean
+                    example: true
+        '400':
+          description: Error al crear detalle de salida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags:
+        - Salidas
+      summary: Obtiene todos los Detalles de Salida por ID
+      description: Obtiene Detalles de Salida
+      security:
+        - bearerAuth: []
+      operationId: obtenerDetallesSalida
+      parameters:
+        - name: salidaId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Detalles de Salida
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: Detalles de Salida
+                  datos:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SalidaDetalleModelConAsociaciones'
+                  codigo:
+                    type: integer
+                    format: int32
+                    example: 200
+                  exito:
+                    type: boolean
+                    example: true
+        '400':
+          description: Error al obtener detalles de salida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /salida_equipos/v1/adjuntos:
+    post:
+      tags:
+        - Adjuntos
+      summary: Crea Adjunto para un Detalle de Salida
+      security:
+        - bearerAuth: []
+      description: Crea Adjunto
+      operationId: crearAdjunto
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                salidaDetalleId:
+                  type: integer
+                  format: int32
+                  example: 1
+                archivos:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '201':
+          description: Adjunto creado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: Adjunto creado
+                  datos:
+                    $ref: '#/components/schemas/AdjuntosModel'
+                  codigo:
+                    type: integer
+                    format: int32
+                    example: 201
+                  exito:
+                    type: boolean
+                    example: true
+        '400':
+          description: Error al crear adjunto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        codigo:
+          type: integer
+          format: int32
+          example: 400
+        mensaje:
+          type: string
+          example: Error
+        datos:
+          type: object
+          example: null
+        exito:
+          type: boolean
+          example: false
+    UsuarioModel:
+      type: object
+      properties:
+        cedula:
+          type: string
+          example: 0987654321
+        email:
+          type: string
+          example: test@test.com
+        nombre:
+          type: string
+          example: Nombre Apellidos
+        username:
+          type: string
+          example: test@test
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        telefono:
+          type: string
+          example: 0987654321
+        rolId:
+          type: integer
+          format: int32
+          example: 1
+    EquipoModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        nombre:
+          type: string
+          example: LAPTOP HP
+        marca:
+          type: string
+          example: HP
+        modelo:
+          type: string
+          example: PAVILION
+        serie:
+          type: string
+          example: 123456789
+        descripcion:
+          type: string
+          example: Descripcion
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+    LugarModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        nombre:
+          type: string
+          example: KFC ALBORADA
+        direccion:
+          type: string
+          example: Direccion
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+    CrearUsuario:
+      type: object
+      required: 
+        - cedula
+        - email
+        - password
+        - nombre
+        - username
+      properties:
+        cedula:
+          type: string
+          example: 0987654321
+        email:
+          type: string
+          example: test@test.com
+        password:
+          type: string
+        nombre:
+          type: string
+          example: Nombre Apellidos
+        username:
+          type: string
+          example: test@test.com
+    LoginUsuarioResponse:
+      type: object
+      properties:
+        mensaje:
+          type: string
+          example: Usuario logueado
+        datos:
+          type: object
+          properties:
+            token:
+              type: string
+              example: token
+            usuario:
+              type: string
+              example: test@tes.comt
+        codigo:
+          type: integer
+          format: int32
+          example: 200
+        exito:
+          type: boolean
+          example: true
+    LoginUsuario:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: test@test.com
+        password:
+          type: string
+    SalidaModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        motivoSalida:
+          type: string
+          example: Salida de Equipos
+        fechaHoraSalida:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        responsableId:
+          type: integer
+          format: int32
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        estado:
+          type: string
+          example: PND
+    CrearSalida:
+      type: object
+      required:
+        - motivoSalida
+      properties:
+        motivoSalida:
+          type: string
+          example: Salida de Equipos
+        fechaHoraSalida:
+          type: string
+          format: date
+          example: 2025-01-02T00:00:00Z
+    SalidaDetalleModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        cantidad:
+          type: integer
+          format: int32
+          example: 6
+        salidaId:
+          type: integer
+          format: int32
+          example: 1
+        destinoId:
+          type: integer
+          format: int32
+          example: 1
+        equipoId:
+          type: integer
+          format: int32
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+    AdjuntosModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1        
+        salidaDetalleId:
+          type: integer
+          format: int32
+          example: 1
+        data:
+          type: string
+          example: 'ENCRYPTEDDATAFORIMAGE'
+        tipo:
+          type: string
+          example: IMAGEN
+        extension:
+          type: string
+          example: image/png        
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+    CrearSalidaDetalle:
+      type: object
+      required:
+        - nombreEquipo
+        - marcaEquipo
+        - modeloEquipo
+        - serieEquipo
+        - descripcionEquipo
+        - nombreDestino
+        - cantidad
+      properties:
+        nombreEquipo:
+          type: string
+          example: LAPTOP HP
+        marcaEquipo:
+          type: string
+          example: HP
+        modeloEquipo:
+          type: string
+          example: PAVILION
+        descripcionEquipo:
+          type: string
+          example: Descripcion
+        nombreDestino:
+          type: string
+          example: KFC ALBORADA
+        cantidad:
+          type: integer
+          example: 6
+    SalidaModelConAsociaciones:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        motivoSalida:
+          type: string
+          example: Salida de Equipos
+        fechaHoraSalida:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        responsableId:
+          type: integer
+          format: int32
+          example: 1
+        autorizadorId:
+          type: integer
+          format: int32
+          example: 1
+        autorizador:
+          $ref: '#/components/schemas/UsuarioModel'
+        responsable:
+          $ref: '#/components/schemas/UsuarioModel'
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        estado:
+          type: string
+          example: PND
+    SalidaDetalleModelConAsociaciones:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 1
+        cantidad:
+          type: integer
+          format: int32
+          example: 6
+        salidaId:
+          type: integer
+          format: int32
+          example: 1
+        salida:
+          $ref: '#/components/schemas/SalidaModel'
+        destinoId:
+          type: integer
+          format: int32
+          example: 1
+        equipoId:
+          type: integer
+          format: int32
+          example: 1
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-01-02T00:00:00Z
+        equipo:
+          $ref: '#/components/schemas/EquipoModel'
+        destino:
+          $ref: '#/components/schemas/LugarModel'
+        adjuntos:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdjuntosModel'
+    
+    

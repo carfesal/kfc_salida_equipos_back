@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  app:    
+    container_name: kfc_equipos_back
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "${APP_PORT:-3000}:3000"
+      - "9229:9229"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    restart: on-failure
+    depends_on:
+      - db      
+  db:
+    # container_name: kfc_equipos_db
+    # image: postgres:latest
+    # ports:
+    #   - "${DB_PORT:-5432}:5432"
+    # environment:
+    #   POSTGRES_USER: ${DB_USERNAME} # The PostgreSQL user (useful to connect to the database)
+    #   POSTGRES_PASSWORD: ${DB_PASSWORD}
+    #   POSTGRES_DB: ${DB_NAME} # The PostgreSQL database name
+    # volumes:
+    #   # In this example, we share the folder `db-data` in our root repository, with the default PostgreSQL data path
+    #   # It means that every time the repository is modifying the data inside
+    #   # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`
+    #   # You don't need to create the `db-data` folder. Docker Compose will do it for you
+    #   - kfc_db_data:/var/lib/postgresql/data/
+    # restart: on-failure
+    container_name: kfc_equipos_mssql_db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD}
+      ACCEPT_EULA: "Y"
+volumes:
+  kfc_db_data: {}
+  kfc_mssql_data: {}
